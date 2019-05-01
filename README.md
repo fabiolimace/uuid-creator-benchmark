@@ -1,8 +1,8 @@
 # UUID Creator Benchmark
 
-This project is a simple benchmark using JMH that compares UUID Creator to other UUID generators.
+This is a simple benchmark using JMH that compares UUID Creator to other UUID generators.
 
-This table shows the results for UUID Creator v0.9.5.
+The table below shows the results for UUID Creator v0.9.5.
 
 ```text
 ---------------------------------------------------------------------------------
