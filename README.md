@@ -1,6 +1,6 @@
 # UUID Creator Benchmark
 
-This is a simple benchmark using JMH that compares UUID Creator to other UUID generators.
+This is a simple benchmark using JMH that compares [UUID Creator](https://github.com/f4b6a3/uuid-creator) to other UUID generators.
 
 The table below shows the results for UUID Creator v0.9.5.
 
@@ -33,3 +33,12 @@ Total time: 00:01:51
 ```
 
 This benchmark was executed in a machine Intel i5-3330 with 8GB RAM.
+
+Links for generators
+-------------------------------------------
+* [UUID Creator](https://github.com/f4b6a3/uuid-creator)
+* [Java Utils UUID Type and Generator](https://docs.oracle.com/javase/7/docs/api/java/util/UUID.html)
+* [Java UUID Generator (JUG)](https://github.com/cowtowncoder/java-uuid-generator)
+* [EAIO UUID Generator - Connolly (fork)](http://stephenc.github.io/eaio-uuid/)
+* [EAIO UUID Generator - Burkard (original)](https://johannburkard.de/software/uuid/)
+
