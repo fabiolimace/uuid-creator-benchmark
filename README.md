@@ -1,4 +1,4 @@
-# uuid-creator-benchmark
+# UUID Creator Benchmark
 
 This project is a simple benchmark using JMH that compares UUID Creator to other UUID generators.
 
