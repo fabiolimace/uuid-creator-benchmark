@@ -168,6 +168,11 @@ public class BenchmarkRunner {
 	public UUID UuidCreator_NameBasedSha1() {
 		return UuidCreator.getNameBasedSha1(name);
 	}
+	
+	@Benchmark
+	public UUID UuidCreator_NameBasedSha256() {
+		return UuidCreator.getNameBasedSha256(name);
+	}
 
 	@Benchmark
 	public UUID UuidCreator_Sequential() {

@@ -2,33 +2,35 @@
 
 This is a simple benchmark using JMH that compares [UUID Creator](https://github.com/f4b6a3/uuid-creator) to other UUID generators.
 
-The table below shows the results for UUID Creator v0.9.5.
+The table below shows the results for UUID Creator v0.9.8.
 
 ```text
 ---------------------------------------------------------------------------------
 Benchmark                                       Mode  Cnt   Score   Error  Units
 ---------------------------------------------------------------------------------
-BenchmarkRunner.EAIO_TimeBasedWithMac             ss  100   7,282 ±  0,691  ms/op
-BenchmarkRunner.JUG_NameBased                     ss  100  40,858 ±  3,520  ms/op
-BenchmarkRunner.JUG_Random                        ss  100  54,906 ±  4,317  ms/op
-BenchmarkRunner.JUG_TimeBased                     ss  100   7,832 ±  0,917  ms/op
-BenchmarkRunner.JUG_TimeBasedWithMAC              ss  100   7,692 ±  0,918  ms/op
-BenchmarkRunner.Java_NameBased                    ss  100  53,126 ± 10,778  ms/op
-BenchmarkRunner.Java_Random                       ss  100  55,164 ±  4,495  ms/op
-BenchmarkRunner.UuidCreator_CombGuid              ss  100  48,176 ±  5,144  ms/op
-BenchmarkRunner.UuidCreator_DceSecurity           ss  100   7,976 ±  1,181  ms/op
-BenchmarkRunner.UuidCreator_DceSecurityWithMac    ss  100   7,961 ±  1,175  ms/op
-BenchmarkRunner.UuidCreator_FastRandom            ss  100   3,294 ±  0,554  ms/op
-BenchmarkRunner.UuidCreator_MssqlGuid             ss  100   8,055 ±  0,901  ms/op
-BenchmarkRunner.UuidCreator_NameBasedMd5          ss  100  43,760 ±  4,619  ms/op
-BenchmarkRunner.UuidCreator_NameBasedSha1         ss  100  52,222 ±  4,914  ms/op
-BenchmarkRunner.UuidCreator_Random                ss  100  46,679 ±  2,731  ms/op
-BenchmarkRunner.UuidCreator_Sequential            ss  100   7,300 ±  0,983  ms/op
-BenchmarkRunner.UuidCreator_SequentialWithMac     ss  100   7,416 ±  1,017  ms/op
-BenchmarkRunner.UuidCreator_TimeBased             ss  100   7,375 ±  1,016  ms/op
-BenchmarkRunner.UuidCreator_TimeBasedWithMac      ss  100   7,550 ±  0,947  ms/op
+Benchmark                                       Mode  Cnt   Score   Error  Units
+BenchmarkRunner.EAIO_TimeBasedWithMac             ss  100   6,960 ± 0,599  ms/op
+BenchmarkRunner.JUG_NameBased                     ss  100  40,234 ± 3,409  ms/op
+BenchmarkRunner.JUG_Random                        ss  100  54,829 ± 4,449  ms/op
+BenchmarkRunner.JUG_TimeBased                     ss  100   7,719 ± 0,916  ms/op
+BenchmarkRunner.JUG_TimeBasedWithMAC              ss  100   7,658 ± 0,947  ms/op
+BenchmarkRunner.Java_NameBased                    ss  100  51,298 ± 8,535  ms/op
+BenchmarkRunner.Java_Random                       ss  100  54,596 ± 4,349  ms/op
+BenchmarkRunner.UuidCreator_CombGuid              ss  100  49,012 ± 4,834  ms/op
+BenchmarkRunner.UuidCreator_DceSecurity           ss  100   7,955 ± 1,212  ms/op
+BenchmarkRunner.UuidCreator_DceSecurityWithMac    ss  100   7,960 ± 1,134  ms/op
+BenchmarkRunner.UuidCreator_FastRandom            ss  100   3,184 ± 0,591  ms/op
+BenchmarkRunner.UuidCreator_MssqlGuid             ss  100   7,653 ± 0,935  ms/op
+BenchmarkRunner.UuidCreator_NameBasedMd5          ss  100  43,577 ± 4,424  ms/op
+BenchmarkRunner.UuidCreator_NameBasedSha1         ss  100  52,338 ± 4,488  ms/op
+BenchmarkRunner.UuidCreator_NameBasedSha256       ss  100  71,916 ± 4,108  ms/op
+BenchmarkRunner.UuidCreator_Random                ss  100  46,137 ± 2,364  ms/op
+BenchmarkRunner.UuidCreator_Sequential            ss  100   6,988 ± 0,943  ms/op
+BenchmarkRunner.UuidCreator_SequentialWithMac     ss  100   6,995 ± 0,928  ms/op
+BenchmarkRunner.UuidCreator_TimeBased             ss  100   7,254 ± 0,925  ms/op
+BenchmarkRunner.UuidCreator_TimeBasedWithMac      ss  100   7,235 ± 0,921  ms/op
 ---------------------------------------------------------------------------------
-Total time: 00:01:51
+Total time: 00:02:02
 ---------------------------------------------------------------------------------
 ```
 
