@@ -36,7 +36,7 @@ import com.fasterxml.uuid.impl.NameBasedGenerator;
 import com.fasterxml.uuid.impl.RandomBasedGenerator;
 import com.fasterxml.uuid.impl.TimeBasedGenerator;
 import com.github.f4b6a3.uuid.UuidCreator;
-import com.github.f4b6a3.uuid.exception.OverrunException;
+import com.github.f4b6a3.uuid.exception.UuidCreatorException;
 import com.github.f4b6a3.uuid.factory.CombGuidCreator;
 import com.github.f4b6a3.uuid.factory.DceSecurityUuidCreator;
 import com.github.f4b6a3.uuid.factory.MssqlGuidCreator;
@@ -91,117 +91,145 @@ public class BenchmarkRunner {
 		timeBasedMacCreator = UuidCreator.getTimeBasedCreator().withHardwareAddress();
 		dceSecurityCreator = UuidCreator.getDceSecurityCreator();
 		dceSecurityWithMacCreator = UuidCreator.getDceSecurityCreator().withHardwareAddress();
-		mssqlCreator = UuidCreator.getMssqlCreator();
-		combCreator = UuidCreator.getCombCreator();
-		
+		mssqlCreator = UuidCreator.getMssqlGuidCreator();
+		combCreator = UuidCreator.getCombGuidCreator();
+
 	}
 
 	// Java UUID
 
 	@Benchmark
-	public UUID Java_Random() {
+	public UUID JavaRandom() {
 		return UUID.randomUUID();
 	}
 
 	@Benchmark
-	public UUID Java_NameBased() {
+	public UUID JavaNameBased() {
 		return UUID.nameUUIDFromBytes(bytes);
 	}
 
 	// EAIO
 
 	@Benchmark
-	public com.eaio.uuid.UUID EAIO_TimeBasedWithMac() {
+	public com.eaio.uuid.UUID EaioTimeBasedWithMac() {
 		return new com.eaio.uuid.UUID();
 	}
 
 	// JUG
 
 	@Benchmark
-	public UUID JUG_NameBased() {
+	public UUID JugNameBased() {
 		return jugNameBasedGenerator.generate(bytes);
 	}
 
 	@Benchmark
-	public UUID JUG_TimeBased() {
+	public UUID JugTimeBased() {
 		return jugTimeBasedGenerator.generate();
 	}
 
 	@Benchmark
-	public UUID JUG_TimeBasedWithMAC() {
+	public UUID JugTimeBasedWithMAC() {
 		return jugTimeBasedMACGenerator.generate();
 	}
 
 	@Benchmark
-	public UUID JUG_Random() {
+	public UUID JugRandom() {
 		return jugRandomGenerator.generate();
 	}
 
-	// UUID Generator
+	// UUID Creator
 
 	@Benchmark
-	public UUID UuidCreator_Random() {
+	public UUID UuidCreatorRandom() {
 		return UuidCreator.getRandom();
 	}
 
 	@Benchmark
-	public UUID UuidCreator_FastRandom() {
+	public UUID UuidCreatorFastRandom() {
 		return UuidCreator.getFastRandom();
 	}
 
 	@Benchmark
-	public UUID UuidCreator_DceSecurity() {
-		return dceSecurityCreator.create((byte) 1, 1701);
-	}
-
-	@Benchmark
-	public UUID UuidCreator_DceSecurityWithMac() {
-		return dceSecurityWithMacCreator.create((byte) 1, 1701);
-	}
-
-	@Benchmark
-	public UUID UuidCreator_NameBasedMd5() {
+	public UUID UuidCreatorNameBasedMd5() {
 		return UuidCreator.getNameBasedMd5(name);
 	}
 
 	@Benchmark
-	public UUID UuidCreator_NameBasedSha1() {
+	public UUID UuidCreatorNameBasedSha1() {
 		return UuidCreator.getNameBasedSha1(name);
 	}
-	
+
 	@Benchmark
-	public UUID UuidCreator_NameBasedSha256() {
+	public UUID UuidCreatorNameBasedSha256() {
 		return UuidCreator.getNameBasedSha256(name);
 	}
 
 	@Benchmark
-	public UUID UuidCreator_Sequential() {
-		return sequentialCreator.create();
-	}
-
-	@Benchmark
-	public UUID UuidCreator_SequentialWithMac() {
-		return sequentialMacCreator.create();
-	}
-
-	@Benchmark
-	public UUID UuidCreator_TimeBased() {
-		return timeBasedCreator.create();
-	}
-
-	@Benchmark
-	public UUID UuidCreator_TimeBasedWithMac() {
-		return timeBasedMacCreator.create();
-	}
-
-	@Benchmark
-	public UUID UuidCreator_MssqlGuid() {
-		return mssqlCreator.create();
-	}
-	
-	@Benchmark
-	public UUID UuidCreator_CombGuid() {
+	public UUID UuidCreatorCombGuid() {
 		return combCreator.create();
+	}
+
+	@Benchmark
+	public UUID UuidCreatorMssqlGuid() {
+		try {
+			return mssqlCreator.create();
+		} catch (UuidCreatorException e) {
+			return null;
+		}
+	}
+
+	@Benchmark
+	public UUID UuidCreatorDceSecurity() {
+		try {
+			return dceSecurityCreator.create((byte) 1, 1701);
+		} catch (UuidCreatorException e) {
+			return null;
+		}
+	}
+
+	@Benchmark
+	public UUID UuidCreatorDceSecurityWithMac() {
+		try {
+			return dceSecurityWithMacCreator.create((byte) 1, 1701);
+		} catch (UuidCreatorException e) {
+			return null;
+		}
+	}
+
+	@Benchmark
+	public UUID UuidCreatorSequential() {
+		try {
+			return sequentialCreator.create();
+		} catch (UuidCreatorException e) {
+			return null;
+		}
+	}
+
+	@Benchmark
+	public UUID UuidCreatorSequentialWithMac() {
+		try {
+			return sequentialMacCreator.create();
+		} catch (UuidCreatorException e) {
+			return null;
+		}
+	}
+
+	@Benchmark
+	public UUID UuidCreatorTimeBased() {
+		try {
+			return timeBasedCreator.create();
+		} catch (UuidCreatorException e) {
+			return null;
+		}
+	}
+
+	@Benchmark
+	public UUID UuidCreatorTimeBasedWithMac() {
+		try {
+			return timeBasedMacCreator.create();
+		} catch (UuidCreatorException e) {
+			return null;
+		}
 	}
 
 	public static void main(String[] args) throws Exception {
