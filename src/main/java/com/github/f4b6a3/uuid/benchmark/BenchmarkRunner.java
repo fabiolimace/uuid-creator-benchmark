@@ -17,6 +17,7 @@
 
 package com.github.f4b6a3.uuid.benchmark;
 
+import java.io.IOException;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
@@ -29,6 +30,7 @@ import org.openjdk.jmh.annotations.Scope;
 import org.openjdk.jmh.annotations.Setup;
 import org.openjdk.jmh.annotations.State;
 import org.openjdk.jmh.annotations.Warmup;
+import org.openjdk.jmh.runner.RunnerException;
 
 import com.fasterxml.uuid.EthernetAddress;
 import com.fasterxml.uuid.Generators;
@@ -39,6 +41,7 @@ import com.github.f4b6a3.uuid.UuidCreator;
 import com.github.f4b6a3.uuid.exception.UuidCreatorException;
 import com.github.f4b6a3.uuid.factory.CombGuidCreator;
 import com.github.f4b6a3.uuid.factory.DceSecurityUuidCreator;
+import com.github.f4b6a3.uuid.factory.LexicalOrderGuidCreator;
 import com.github.f4b6a3.uuid.factory.MssqlGuidCreator;
 import com.github.f4b6a3.uuid.factory.SequentialUuidCreator;
 import com.github.f4b6a3.uuid.factory.TimeBasedUuidCreator;
@@ -51,8 +54,8 @@ import com.github.f4b6a3.uuid.factory.TimeBasedUuidCreator;
  *
  */
 @State(Scope.Thread)
-@Warmup(iterations = 1, batchSize = 1000)
-@Measurement(iterations = 10, batchSize = 100000)
+@Warmup(iterations = 2, batchSize = 100_000)
+@Measurement(iterations = 10, batchSize = 100_000)
 @BenchmarkMode(Mode.SingleShotTime)
 @OutputTimeUnit(TimeUnit.MILLISECONDS)
 public class BenchmarkRunner {
@@ -73,6 +76,7 @@ public class BenchmarkRunner {
 	private DceSecurityUuidCreator dceSecurityWithMacCreator;
 	private MssqlGuidCreator mssqlCreator;
 	private CombGuidCreator combCreator;
+	private LexicalOrderGuidCreator lexicalOrderCreator;
 
 	@Setup
 	public void setUp() {
@@ -93,7 +97,7 @@ public class BenchmarkRunner {
 		dceSecurityWithMacCreator = UuidCreator.getDceSecurityCreator().withHardwareAddress();
 		mssqlCreator = UuidCreator.getMssqlGuidCreator();
 		combCreator = UuidCreator.getCombGuidCreator();
-
+		lexicalOrderCreator = UuidCreator.getLexicalOrderCreator();
 	}
 
 	// Java UUID
@@ -232,7 +236,19 @@ public class BenchmarkRunner {
 		}
 	}
 
-	public static void main(String[] args) throws Exception {
-		org.openjdk.jmh.Main.main(args);
+	@Benchmark
+	public UUID UuidCreatorLexicalOrderGuid() {
+		try {
+			return lexicalOrderCreator.create();
+		} catch (UuidCreatorException e) {
+			return null;
+		}
+	}
+
+	public static void main(String[] args) {
+		try {
+			org.openjdk.jmh.Main.main(args);
+		} catch (RunnerException | IOException e) {
+		}
 	}
 }

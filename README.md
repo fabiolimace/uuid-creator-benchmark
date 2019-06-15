@@ -2,38 +2,53 @@
 
 This is a simple benchmark using JMH that compares [UUID Creator](https://github.com/f4b6a3/uuid-creator) to other UUID generators.
 
-The table below shows the results for UUID Creator v1.2.8.
+The table below shows the results for UUID Creator v1.3.5.
 
 ```text
 ---------------------------------------------------------------------------------
 Benchmark                                       Mode  Cnt   Score   Error  Units
 ---------------------------------------------------------------------------------
-BenchmarkRunner.EaioTimeBasedWithMac             ss  100   6,946 ± 0,533  ms/op
-BenchmarkRunner.JavaNameBased                    ss  100  52,486 ± 9,778  ms/op
-BenchmarkRunner.JavaRandom                       ss  100  54,846 ± 4,672  ms/op
-BenchmarkRunner.JugNameBased                     ss  100  39,635 ± 3,455  ms/op
-BenchmarkRunner.JugRandom                        ss  100  55,042 ± 4,761  ms/op
-BenchmarkRunner.JugTimeBased                     ss  100   7,815 ± 0,970  ms/op
-BenchmarkRunner.JugTimeBasedWithMAC              ss  100   7,827 ± 0,951  ms/op
-BenchmarkRunner.UuidCreatorCombGuid              ss  100  48,273 ± 4,948  ms/op
-BenchmarkRunner.UuidCreatorDceSecurity           ss  100   8,101 ± 1,327  ms/op
-BenchmarkRunner.UuidCreatorDceSecurityWithMac    ss  100   8,358 ± 1,333  ms/op
-BenchmarkRunner.UuidCreatorFastRandom            ss  100   2,973 ± 0,540  ms/op
-BenchmarkRunner.UuidCreatorMssqlGuid             ss  100   8,111 ± 0,967  ms/op
-BenchmarkRunner.UuidCreatorNameBasedMd5          ss  100  42,855 ± 3,826  ms/op
-BenchmarkRunner.UuidCreatorNameBasedSha1         ss  100  52,575 ± 4,795  ms/op
-BenchmarkRunner.UuidCreatorNameBasedSha256       ss  100  71,507 ± 3,846  ms/op
-BenchmarkRunner.UuidCreatorRandom                ss  100  45,711 ± 2,752  ms/op
-BenchmarkRunner.UuidCreatorSequential            ss  100   7,406 ± 0,995  ms/op
-BenchmarkRunner.UuidCreatorSequentialWithMac     ss  100   7,526 ± 1,056  ms/op
-BenchmarkRunner.UuidCreatorTimeBased             ss  100   7,568 ± 1,026  ms/op
-BenchmarkRunner.UuidCreatorTimeBasedWithMac      ss  100   7,591 ± 0,995  ms/op
+BenchmarkRunner.EaioTimeBasedWithMac_ _ _ _ _ _  ss  100   6,451 ± 0,401  ms/op
+BenchmarkRunner.JavaNameBased                    ss  100  41,219 ± 2,226  ms/op
+BenchmarkRunner.JavaRandom_ _ _ _ _ _ _ _ _ _ _  ss  100  50,673 ± 1,050  ms/op
+BenchmarkRunner.JugNameBased                     ss  100  37,119 ± 0,977  ms/op
+BenchmarkRunner.JugRandom                        ss  100  51,056 ± 0,989  ms/op
+BenchmarkRunner.JugTimeBased                     ss  100   6,922 ± 0,484  ms/op
+BenchmarkRunner.JugTimeBasedWithMAC_ _ _ _ _ _ _ ss  100   6,871 ± 0,453  ms/op
+BenchmarkRunner.UuidCreatorCombGuid              ss  100  35,288 ± 1,078  ms/op
+BenchmarkRunner.UuidCreatorDceSecurity           ss  100   7,005 ± 0,464  ms/op
+BenchmarkRunner.UuidCreatorDceSecurityWithMac    ss  100   6,849 ± 0,458  ms/op
+BenchmarkRunner.UuidCreatorFastRandom            ss  100   2,402 ± 0,375  ms/op
+BenchmarkRunner.UuidCreatorLexicalOrderGuid      ss  100   6,708 ± 0,447  ms/op
+BenchmarkRunner.UuidCreatorMssqlGuid             ss  100   7,112 ± 0,442  ms/op
+BenchmarkRunner.UuidCreatorNameBasedMd5          ss  100  36,083 ± 1,251  ms/op
+BenchmarkRunner.UuidCreatorNameBasedSha1         ss  100  44,977 ± 1,343  ms/op
+BenchmarkRunner.UuidCreatorNameBasedSha256       ss  100  63,744 ± 0,998  ms/op
+BenchmarkRunner.UuidCreatorRandom                ss  100  50,518 ± 0,864  ms/op
+BenchmarkRunner.UuidCreatorSequential            ss  100   6,447 ± 0,425  ms/op
+BenchmarkRunner.UuidCreatorSequentialWithMac     ss  100   6,439 ± 0,462  ms/op
+BenchmarkRunner.UuidCreatorTimeBased             ss  100   6,526 ± 0,432  ms/op
+BenchmarkRunner.UuidCreatorTimeBasedWithMac      ss  100   6,471 ± 0,426  ms/op
 ---------------------------------------------------------------------------------
-Total time: 00:02:02
+Total time: 00:02:15
 ---------------------------------------------------------------------------------
 ```
 
-This benchmark was executed in a machine Intel i5-3330 with 8GB RAM.
+This benchmark was executed in a machine Ubuntu 18.04, processor Intel i5-3330 and 8GB RAM.
+
+### Benchmark options
+
+The benchmark executes 10 iterations of 100 thousand operations. Before these iterations it executes 2 warm-up iterations of 100 thousand operations. These are the options used:
+
+```java
+@State(Scope.Thread)
+@Warmup(iterations = 2, batchSize = 100_000)
+@Measurement(iterations = 10, batchSize = 100_000)
+@BenchmarkMode(Mode.SingleShotTime)
+@OutputTimeUnit(TimeUnit.MILLISECONDS)
+```
+
+**Note:** the benchmark options was wrong before the uuid-creator v1.3.5. Before this version the benchmark used 1 warm-up iteration of 1 thousand operations. Now it uses 2 warm-up iterations of 100 thousand operations. The results changed a lot after this correction.
 
 Links for generators
 -------------------------------------------
