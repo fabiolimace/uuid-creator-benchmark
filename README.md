@@ -2,35 +2,35 @@
 
 This is a simple benchmark using JMH that compares [UUID Creator](https://github.com/f4b6a3/uuid-creator) to other UUID generators.
 
-The table below shows the results for UUID Creator v1.3.5.
+The table below shows the results for UUID Creator v1.3.6.
 
 ```text
 ---------------------------------------------------------------------------------
 Benchmark                                       Mode  Cnt   Score   Error  Units
 ---------------------------------------------------------------------------------
-BenchmarkRunner.EaioTimeBasedWithMac_ _ _ _ _ _  ss  100   6,451 ± 0,401  ms/op
-BenchmarkRunner.JavaNameBased                    ss  100  41,219 ± 2,226  ms/op
-BenchmarkRunner.JavaRandom_ _ _ _ _ _ _ _ _ _ _  ss  100  50,673 ± 1,050  ms/op
-BenchmarkRunner.JugNameBased                     ss  100  37,119 ± 0,977  ms/op
-BenchmarkRunner.JugRandom                        ss  100  51,056 ± 0,989  ms/op
-BenchmarkRunner.JugTimeBased                     ss  100   6,922 ± 0,484  ms/op
-BenchmarkRunner.JugTimeBasedWithMAC_ _ _ _ _ _ _ ss  100   6,871 ± 0,453  ms/op
-BenchmarkRunner.UuidCreatorCombGuid              ss  100  35,288 ± 1,078  ms/op
-BenchmarkRunner.UuidCreatorDceSecurity           ss  100   7,005 ± 0,464  ms/op
-BenchmarkRunner.UuidCreatorDceSecurityWithMac    ss  100   6,849 ± 0,458  ms/op
-BenchmarkRunner.UuidCreatorFastRandom            ss  100   2,402 ± 0,375  ms/op
-BenchmarkRunner.UuidCreatorLexicalOrderGuid      ss  100   6,708 ± 0,447  ms/op
-BenchmarkRunner.UuidCreatorMssqlGuid             ss  100   7,112 ± 0,442  ms/op
-BenchmarkRunner.UuidCreatorNameBasedMd5          ss  100  36,083 ± 1,251  ms/op
-BenchmarkRunner.UuidCreatorNameBasedSha1         ss  100  44,977 ± 1,343  ms/op
-BenchmarkRunner.UuidCreatorNameBasedSha256       ss  100  63,744 ± 0,998  ms/op
-BenchmarkRunner.UuidCreatorRandom                ss  100  50,518 ± 0,864  ms/op
-BenchmarkRunner.UuidCreatorSequential            ss  100   6,447 ± 0,425  ms/op
-BenchmarkRunner.UuidCreatorSequentialWithMac     ss  100   6,439 ± 0,462  ms/op
-BenchmarkRunner.UuidCreatorTimeBased             ss  100   6,526 ± 0,432  ms/op
-BenchmarkRunner.UuidCreatorTimeBasedWithMac      ss  100   6,471 ± 0,426  ms/op
+BenchmarkRunner.EaioTimeBasedWithMac _ _ _ _ _ _ ss  100   6,744 ± 0,420  ms/op
+BenchmarkRunner.JavaNameBased                    ss  100  41,785 ± 2,062  ms/op
+BenchmarkRunner.JavaRandom _ _ _ _ _ _ _ _ _ _ _ ss  100  49,404 ± 0,946  ms/op
+BenchmarkRunner.JugNameBased                     ss  100  36,921 ± 0,970  ms/op
+BenchmarkRunner.JugRandom                        ss  100  49,867 ± 0,928  ms/op
+BenchmarkRunner.JugTimeBased                     ss  100   6,943 ± 0,485  ms/op
+BenchmarkRunner.JugTimeBasedWithMAC_ _ _ _ _ _ _ ss  100   6,861 ± 0,472  ms/op
+BenchmarkRunner.UuidCreatorCombGuid              ss  100   5,683 ± 0,430  ms/op
+BenchmarkRunner.UuidCreatorDceSecurity           ss  100   6,852 ± 0,437  ms/op
+BenchmarkRunner.UuidCreatorDceSecurityWithMac    ss  100   6,857 ± 0,425  ms/op
+BenchmarkRunner.UuidCreatorFastRandom            ss  100   2,293 ± 0,391  ms/op
+BenchmarkRunner.UuidCreatorLexicalOrderGuid      ss  100   6,702 ± 0,426  ms/op
+BenchmarkRunner.UuidCreatorMssqlGuid             ss  100   6,805 ± 0,431  ms/op
+BenchmarkRunner.UuidCreatorNameBasedMd5          ss  100  36,315 ± 1,340  ms/op
+BenchmarkRunner.UuidCreatorNameBasedSha1         ss  100  44,729 ± 1,355  ms/op
+BenchmarkRunner.UuidCreatorNameBasedSha256       ss  100  64,010 ± 1,274  ms/op
+BenchmarkRunner.UuidCreatorRandom                ss  100  50,076 ± 0,953  ms/op
+BenchmarkRunner.UuidCreatorSequential            ss  100   6,150 ± 0,414  ms/op
+BenchmarkRunner.UuidCreatorSequentialWithMac     ss  100   6,311 ± 0,427  ms/op
+BenchmarkRunner.UuidCreatorTimeBased             ss  100   6,352 ± 0,411  ms/op
+BenchmarkRunner.UuidCreatorTimeBasedWithMac      ss  100   6,336 ± 0,422  ms/op
 ---------------------------------------------------------------------------------
-Total time: 00:02:15
+Total time: 00:02:10
 ---------------------------------------------------------------------------------
 ```
 
