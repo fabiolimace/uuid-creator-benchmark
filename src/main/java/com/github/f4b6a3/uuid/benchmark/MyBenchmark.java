@@ -18,6 +18,11 @@
 package com.github.f4b6a3.uuid.benchmark;
 
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.security.SecureRandom;
+import java.util.Random;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
@@ -29,11 +34,13 @@ import org.openjdk.jmh.annotations.OutputTimeUnit;
 import org.openjdk.jmh.annotations.Scope;
 import org.openjdk.jmh.annotations.Setup;
 import org.openjdk.jmh.annotations.State;
+import org.openjdk.jmh.annotations.Threads;
 import org.openjdk.jmh.annotations.Warmup;
 import org.openjdk.jmh.runner.RunnerException;
 
 import com.fasterxml.uuid.EthernetAddress;
 import com.fasterxml.uuid.Generators;
+import com.fasterxml.uuid.UUIDTimer;
 import com.fasterxml.uuid.impl.NameBasedGenerator;
 import com.fasterxml.uuid.impl.RandomBasedGenerator;
 import com.fasterxml.uuid.impl.TimeBasedGenerator;
@@ -43,31 +50,34 @@ import com.github.f4b6a3.uuid.factory.CombGuidCreator;
 import com.github.f4b6a3.uuid.factory.DceSecurityUuidCreator;
 import com.github.f4b6a3.uuid.factory.LexicalOrderGuidCreator;
 import com.github.f4b6a3.uuid.factory.MssqlGuidCreator;
+import com.github.f4b6a3.uuid.factory.NameBasedMd5UuidCreator;
+import com.github.f4b6a3.uuid.factory.NameBasedSha1UuidCreator;
+import com.github.f4b6a3.uuid.factory.NameBasedSha256UuidCreator;
+import com.github.f4b6a3.uuid.factory.RandomUuidCreator;
 import com.github.f4b6a3.uuid.factory.SequentialUuidCreator;
 import com.github.f4b6a3.uuid.factory.TimeBasedUuidCreator;
 
-/**
- * A simple benchmark that compares this implementation to others.
- * 
- * If the computer is too fast, {@link OverrunException} may be thrown,
- * increasing some scores.
- *
- */
+@Threads(4)
 @State(Scope.Thread)
-@Warmup(iterations = 2, batchSize = 100_000)
+@Warmup(iterations = 5, batchSize = 100_000)
 @Measurement(iterations = 10, batchSize = 100_000)
 @BenchmarkMode(Mode.SingleShotTime)
 @OutputTimeUnit(TimeUnit.MILLISECONDS)
-public class BenchmarkRunner {
+public class MyBenchmark {
 
 	private String name;
-	private byte[] bytes;
 
-	private NameBasedGenerator jugNameBasedGenerator;
+	private NameBasedGenerator jugNameBasedMd5Generator;
+	private NameBasedGenerator jugNameBasedSha1Generator;
 	private TimeBasedGenerator jugTimeBasedGenerator;
-	private TimeBasedGenerator jugTimeBasedMACGenerator;
+	private TimeBasedGenerator jugTimeBasedMacGenerator;
 	private RandomBasedGenerator jugRandomGenerator;
 
+	private RandomUuidCreator randomCreator;
+	private RandomUuidCreator fastRandomCreator;
+	private NameBasedMd5UuidCreator nameBasedMd5Creator;
+	private NameBasedSha1UuidCreator nameBasedSha1Creator;
+	private NameBasedSha256UuidCreator nameBasedSha256Creator;
 	private SequentialUuidCreator sequentialCreator;
 	private TimeBasedUuidCreator timeBasedCreator;
 	private SequentialUuidCreator sequentialMacCreator;
@@ -79,16 +89,21 @@ public class BenchmarkRunner {
 	private LexicalOrderGuidCreator lexicalOrderCreator;
 
 	@Setup
-	public void setUp() {
+	public void setUp() throws IOException {
 
 		name = "https://github.com/";
-		bytes = name.getBytes();
 
-		jugNameBasedGenerator = Generators.nameBasedGenerator();
-		jugTimeBasedGenerator = Generators.timeBasedGenerator();
-		jugTimeBasedMACGenerator = Generators.timeBasedGenerator(EthernetAddress.fromInterface());
-		jugRandomGenerator = Generators.randomBasedGenerator();
+		jugNameBasedMd5Generator = Generators.nameBasedGenerator(null, getDigester("MD5"));
+		jugNameBasedSha1Generator = Generators.nameBasedGenerator(null, getDigester("SHA-1"));
+		jugTimeBasedGenerator = Generators.timeBasedGenerator(null, getUUIDTimer());
+		jugTimeBasedMacGenerator = Generators.timeBasedGenerator(EthernetAddress.fromInterface(), getUUIDTimer());
+		jugRandomGenerator = Generators.randomBasedGenerator(new SecureRandom());
 
+		randomCreator = UuidCreator.getRandomCreator();
+		fastRandomCreator = UuidCreator.getFastRandomCreator();
+		nameBasedMd5Creator = UuidCreator.getNameBasedMd5Creator();
+		nameBasedSha1Creator = UuidCreator.getNameBasedSha1Creator();
+		nameBasedSha256Creator = UuidCreator.getNameBasedSha256Creator();
 		sequentialCreator = UuidCreator.getSequentialCreator();
 		timeBasedCreator = UuidCreator.getTimeBasedCreator();
 		sequentialMacCreator = UuidCreator.getSequentialCreator().withHardwareAddress();
@@ -100,81 +115,105 @@ public class BenchmarkRunner {
 		lexicalOrderCreator = UuidCreator.getLexicalOrderCreator();
 	}
 
+	private static MessageDigest getDigester(String alg) {
+		MessageDigest digester;
+		try {
+			digester = MessageDigest.getInstance(alg);
+		} catch (NoSuchAlgorithmException nex) {
+			throw new IllegalArgumentException("Couldn't instantiate SHA-1 MessageDigest instance: " + nex.toString());
+		}
+		return digester;
+	}
+
+	private static UUIDTimer getUUIDTimer() {
+		try {
+			return new UUIDTimer(new Random(System.currentTimeMillis()), null);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
 	// Java UUID
 
 	@Benchmark
-	public UUID JavaRandom() {
+	public UUID Java_Random() {
 		return UUID.randomUUID();
 	}
 
 	@Benchmark
-	public UUID JavaNameBased() {
-		return UUID.nameUUIDFromBytes(bytes);
+	public UUID Java_NameBased() {
+		return UUID.nameUUIDFromBytes(name.getBytes(StandardCharsets.UTF_8));
 	}
 
 	// EAIO
 
 	@Benchmark
-	public com.eaio.uuid.UUID EaioTimeBasedWithMac() {
+	public com.eaio.uuid.UUID EAIO_TimeBasedWithMac() {
 		return new com.eaio.uuid.UUID();
 	}
 
 	// JUG
 
 	@Benchmark
-	public UUID JugNameBased() {
-		return jugNameBasedGenerator.generate(bytes);
+	public UUID JUG_NameBasedMd5() {
+		return jugNameBasedMd5Generator.generate(name);
 	}
 
 	@Benchmark
-	public UUID JugTimeBased() {
+	public UUID JUG_NameBasedSha1() {
+		return jugNameBasedSha1Generator.generate(name);
+	}
+
+	@Benchmark
+	public UUID JUG_TimeBased() {
 		return jugTimeBasedGenerator.generate();
 	}
 
 	@Benchmark
-	public UUID JugTimeBasedWithMAC() {
-		return jugTimeBasedMACGenerator.generate();
+	public UUID JUG_TimeBasedWithMAC() {
+		return jugTimeBasedMacGenerator.generate();
 	}
 
 	@Benchmark
-	public UUID JugRandom() {
+	public UUID JUG_Random() {
 		return jugRandomGenerator.generate();
 	}
 
 	// UUID Creator
 
 	@Benchmark
-	public UUID UuidCreatorRandom() {
-		return UuidCreator.getRandom();
+	public UUID UuidCreator_Random() {
+		return randomCreator.create();
 	}
 
 	@Benchmark
-	public UUID UuidCreatorFastRandom() {
-		return UuidCreator.getFastRandom();
+	public UUID UuidCreator_FastRandom() {
+		return fastRandomCreator.create();
 	}
 
 	@Benchmark
-	public UUID UuidCreatorNameBasedMd5() {
-		return UuidCreator.getNameBasedMd5(name);
+	public UUID UuidCreator_NameBasedMd5() {
+		return nameBasedMd5Creator.create(name);
 	}
 
 	@Benchmark
-	public UUID UuidCreatorNameBasedSha1() {
-		return UuidCreator.getNameBasedSha1(name);
+	public UUID UuidCreator_NameBasedSha1() {
+		return nameBasedSha1Creator.create(name);
 	}
 
 	@Benchmark
-	public UUID UuidCreatorNameBasedSha256() {
-		return UuidCreator.getNameBasedSha256(name);
+	public UUID UuidCreator_NameBasedSha256() {
+		return nameBasedSha256Creator.create(name);
 	}
 
 	@Benchmark
-	public UUID UuidCreatorCombGuid() {
+	public UUID UuidCreator_CombGuid() {
 		return combCreator.create();
 	}
 
 	@Benchmark
-	public UUID UuidCreatorMssqlGuid() {
+	public UUID UuidCreator_MssqlGuid() {
 		try {
 			return mssqlCreator.create();
 		} catch (UuidCreatorException e) {
@@ -183,7 +222,7 @@ public class BenchmarkRunner {
 	}
 
 	@Benchmark
-	public UUID UuidCreatorDceSecurity() {
+	public UUID UuidCreator_DceSecurity() {
 		try {
 			return dceSecurityCreator.create((byte) 1, 1701);
 		} catch (UuidCreatorException e) {
@@ -192,7 +231,7 @@ public class BenchmarkRunner {
 	}
 
 	@Benchmark
-	public UUID UuidCreatorDceSecurityWithMac() {
+	public UUID UuidCreator_DceSecurityWithMac() {
 		try {
 			return dceSecurityWithMacCreator.create((byte) 1, 1701);
 		} catch (UuidCreatorException e) {
@@ -201,7 +240,7 @@ public class BenchmarkRunner {
 	}
 
 	@Benchmark
-	public UUID UuidCreatorSequential() {
+	public UUID UuidCreator_Sequential() {
 		try {
 			return sequentialCreator.create();
 		} catch (UuidCreatorException e) {
@@ -210,7 +249,7 @@ public class BenchmarkRunner {
 	}
 
 	@Benchmark
-	public UUID UuidCreatorSequentialWithMac() {
+	public UUID UuidCreator_SequentialWithMac() {
 		try {
 			return sequentialMacCreator.create();
 		} catch (UuidCreatorException e) {
@@ -219,7 +258,7 @@ public class BenchmarkRunner {
 	}
 
 	@Benchmark
-	public UUID UuidCreatorTimeBased() {
+	public UUID UuidCreator_TimeBased() {
 		try {
 			return timeBasedCreator.create();
 		} catch (UuidCreatorException e) {
@@ -228,7 +267,7 @@ public class BenchmarkRunner {
 	}
 
 	@Benchmark
-	public UUID UuidCreatorTimeBasedWithMac() {
+	public UUID UuidCreator_TimeBasedWithMac() {
 		try {
 			return timeBasedMacCreator.create();
 		} catch (UuidCreatorException e) {
@@ -237,7 +276,7 @@ public class BenchmarkRunner {
 	}
 
 	@Benchmark
-	public UUID UuidCreatorLexicalOrderGuid() {
+	public UUID UuidCreator_LexicalOrderGuid() {
 		try {
 			return lexicalOrderCreator.create();
 		} catch (UuidCreatorException e) {
