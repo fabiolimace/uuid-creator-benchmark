@@ -5,9 +5,9 @@ This is a simple benchmark using JMH that compares [UUID Creator](https://github
 The table below shows the results for UUID Creator v1.3.7.
 
 ```text
----------------------------------------------------------------------------------
-Benchmark                                       Mode  Cnt   Score   Error  Units
----------------------------------------------------------------------------------
+-----------------------------------------------------------------------------
+Benchmark                                   Mode  Cnt   Score   Error  Units
+-----------------------------------------------------------------------------
 MyBenchmark.EAIO_TimeBasedWithMac             ss  200   5,653 ± 0,224  ms/op
 MyBenchmark.JUG_NameBasedMd5                  ss  200  37,970 ± 1,380  ms/op
 MyBenchmark.JUG_NameBasedSha1                 ss  200  46,836 ± 1,378  ms/op
@@ -30,9 +30,9 @@ MyBenchmark.UuidCreator_Sequential            ss  200   5,709 ± 0,293  ms/op
 MyBenchmark.UuidCreator_SequentialWithMac     ss  200   5,841 ± 0,320  ms/op
 MyBenchmark.UuidCreator_TimeBased             ss  200   5,710 ± 0,287  ms/op
 MyBenchmark.UuidCreator_TimeBasedWithMac      ss  200   5,746 ± 0,283  ms/op
----------------------------------------------------------------------------------
+-----------------------------------------------------------------------------
 Total time: 00:03:55
----------------------------------------------------------------------------------
+-----------------------------------------------------------------------------
 ```
 
 This benchmark was executed in a machine Ubuntu 18.04, processor Intel i5-3330 and 8GB RAM.
