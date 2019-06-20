@@ -57,10 +57,10 @@ import com.github.f4b6a3.uuid.factory.RandomUuidCreator;
 import com.github.f4b6a3.uuid.factory.SequentialUuidCreator;
 import com.github.f4b6a3.uuid.factory.TimeBasedUuidCreator;
 
-@Threads(4)
+@Threads(1)
 @State(Scope.Thread)
-@Warmup(iterations = 5, batchSize = 100_000)
-@Measurement(iterations = 10, batchSize = 100_000)
+@Warmup(iterations = 10, batchSize = 100_000)
+@Measurement(iterations = 20, batchSize = 100_000)
 @BenchmarkMode(Mode.SingleShotTime)
 @OutputTimeUnit(TimeUnit.MILLISECONDS)
 public class MyBenchmark {
