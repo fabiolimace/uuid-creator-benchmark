@@ -63,7 +63,8 @@ import com.github.f4b6a3.uuid.factory.TimeBasedUuidCreator;
 @OutputTimeUnit(TimeUnit.MILLISECONDS)
 public class MyBenchmark {
 
-	private String name;
+	private String name = "John Smith";
+	private byte[] bytes = name.getBytes(StandardCharsets.UTF_8);
 
 	private NameBasedGenerator jugNameBasedMd5Generator;
 	private NameBasedGenerator jugNameBasedSha1Generator;
@@ -137,7 +138,7 @@ public class MyBenchmark {
 
 	@Benchmark
 	public UUID Java_NameBased() {
-		return UUID.nameUUIDFromBytes(name.getBytes(StandardCharsets.UTF_8));
+		return UUID.nameUUIDFromBytes(bytes);
 	}
 
 	// EAIO
@@ -151,12 +152,12 @@ public class MyBenchmark {
 
 	@Benchmark
 	public UUID JUG_NameBasedMd5() {
-		return jugNameBasedMd5Generator.generate(name);
+		return jugNameBasedMd5Generator.generate(bytes);
 	}
 
 	@Benchmark
 	public UUID JUG_NameBasedSha1() {
-		return jugNameBasedSha1Generator.generate(name);
+		return jugNameBasedSha1Generator.generate(bytes);
 	}
 
 	@Benchmark
@@ -188,12 +189,12 @@ public class MyBenchmark {
 
 	@Benchmark
 	public UUID UuidCreator_NameBasedMd5() {
-		return nameBasedMd5Creator.create(name);
+		return nameBasedMd5Creator.create(bytes);
 	}
 
 	@Benchmark
 	public UUID UuidCreator_NameBasedSha1() {
-		return nameBasedSha1Creator.create(name);
+		return nameBasedSha1Creator.create(bytes);
 	}
 
 	@Benchmark
