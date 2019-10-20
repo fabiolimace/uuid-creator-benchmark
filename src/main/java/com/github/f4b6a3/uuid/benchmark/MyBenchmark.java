@@ -49,10 +49,8 @@ import com.github.f4b6a3.uuid.exception.UuidCreatorException;
 import com.github.f4b6a3.uuid.factory.CombGuidCreator;
 import com.github.f4b6a3.uuid.factory.DceSecurityUuidCreator;
 import com.github.f4b6a3.uuid.factory.LexicalOrderGuidCreator;
-import com.github.f4b6a3.uuid.factory.MssqlGuidCreator;
 import com.github.f4b6a3.uuid.factory.NameBasedMd5UuidCreator;
 import com.github.f4b6a3.uuid.factory.NameBasedSha1UuidCreator;
-import com.github.f4b6a3.uuid.factory.NameBasedSha256UuidCreator;
 import com.github.f4b6a3.uuid.factory.RandomUuidCreator;
 import com.github.f4b6a3.uuid.factory.SequentialUuidCreator;
 import com.github.f4b6a3.uuid.factory.TimeBasedUuidCreator;
@@ -77,14 +75,12 @@ public class MyBenchmark {
 	private RandomUuidCreator fastRandomCreator;
 	private NameBasedMd5UuidCreator nameBasedMd5Creator;
 	private NameBasedSha1UuidCreator nameBasedSha1Creator;
-	private NameBasedSha256UuidCreator nameBasedSha256Creator;
 	private SequentialUuidCreator sequentialCreator;
 	private TimeBasedUuidCreator timeBasedCreator;
 	private SequentialUuidCreator sequentialMacCreator;
 	private TimeBasedUuidCreator timeBasedMacCreator;
 	private DceSecurityUuidCreator dceSecurityCreator;
 	private DceSecurityUuidCreator dceSecurityWithMacCreator;
-	private MssqlGuidCreator mssqlCreator;
 	private CombGuidCreator combCreator;
 	private LexicalOrderGuidCreator lexicalOrderCreator;
 
@@ -103,14 +99,12 @@ public class MyBenchmark {
 		fastRandomCreator = UuidCreator.getFastRandomCreator();
 		nameBasedMd5Creator = UuidCreator.getNameBasedMd5Creator();
 		nameBasedSha1Creator = UuidCreator.getNameBasedSha1Creator();
-		nameBasedSha256Creator = UuidCreator.getNameBasedSha256Creator();
 		sequentialCreator = UuidCreator.getSequentialCreator();
 		timeBasedCreator = UuidCreator.getTimeBasedCreator();
-		sequentialMacCreator = UuidCreator.getSequentialCreator().withHardwareAddress();
-		timeBasedMacCreator = UuidCreator.getTimeBasedCreator().withHardwareAddress();
+		sequentialMacCreator = UuidCreator.getSequentialCreator().withHardwareAddressNodeIdentifier();
+		timeBasedMacCreator = UuidCreator.getTimeBasedCreator().withHardwareAddressNodeIdentifier();
 		dceSecurityCreator = UuidCreator.getDceSecurityCreator();
-		dceSecurityWithMacCreator = UuidCreator.getDceSecurityCreator().withHardwareAddress();
-		mssqlCreator = UuidCreator.getMssqlGuidCreator();
+		dceSecurityWithMacCreator = UuidCreator.getDceSecurityCreator().withHardwareAddressNodeIdentifier();
 		combCreator = UuidCreator.getCombGuidCreator();
 		lexicalOrderCreator = UuidCreator.getLexicalOrderCreator();
 	}
@@ -203,22 +197,8 @@ public class MyBenchmark {
 	}
 
 	@Benchmark
-	public UUID UuidCreator_NameBasedSha256() {
-		return nameBasedSha256Creator.create(name);
-	}
-
-	@Benchmark
 	public UUID UuidCreator_CombGuid() {
 		return combCreator.create();
-	}
-
-	@Benchmark
-	public UUID UuidCreator_MssqlGuid() {
-		try {
-			return mssqlCreator.create();
-		} catch (UuidCreatorException e) {
-			return null;
-		}
 	}
 
 	@Benchmark
@@ -265,7 +245,7 @@ public class MyBenchmark {
 			return null;
 		}
 	}
-
+	
 	@Benchmark
 	public UUID UuidCreator_TimeBasedWithMac() {
 		try {
@@ -283,7 +263,7 @@ public class MyBenchmark {
 			return null;
 		}
 	}
-
+	
 	public static void main(String[] args) {
 		try {
 			org.openjdk.jmh.Main.main(args);
