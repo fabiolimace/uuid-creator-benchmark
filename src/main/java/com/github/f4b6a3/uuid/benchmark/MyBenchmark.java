@@ -36,7 +36,6 @@ import org.openjdk.jmh.annotations.Setup;
 import org.openjdk.jmh.annotations.State;
 import org.openjdk.jmh.annotations.Threads;
 import org.openjdk.jmh.annotations.Warmup;
-import org.openjdk.jmh.runner.RunnerException;
 
 import com.fasterxml.uuid.EthernetAddress;
 import com.fasterxml.uuid.Generators;
@@ -58,7 +57,7 @@ import com.github.f4b6a3.uuid.factory.TimeBasedUuidCreator;
 @Threads(1)
 @State(Scope.Thread)
 @Warmup(iterations = 10, batchSize = 100_000)
-@Measurement(iterations = 20, batchSize = 100_000)
+@Measurement(iterations = 200, batchSize = 100_000)
 @BenchmarkMode(Mode.SingleShotTime)
 @OutputTimeUnit(TimeUnit.MILLISECONDS)
 public class MyBenchmark {
@@ -106,7 +105,7 @@ public class MyBenchmark {
 		timeBasedMacCreator = UuidCreator.getTimeBasedCreator().withHardwareAddressNodeIdentifier();
 		dceSecurityCreator = UuidCreator.getDceSecurityCreator();
 		dceSecurityWithMacCreator = UuidCreator.getDceSecurityCreator().withHardwareAddressNodeIdentifier();
-		combCreator = UuidCreator.getCombGuidCreator();
+		combCreator = UuidCreator.getCombCreator();
 		lexicalOrderCreator = UuidCreator.getLexicalOrderCreator();
 	}
 
@@ -268,7 +267,7 @@ public class MyBenchmark {
 	public static void main(String[] args) {
 		try {
 			org.openjdk.jmh.Main.main(args);
-		} catch (RunnerException | IOException e) {
+		} catch (IOException e) {
 		}
 	}
 }
