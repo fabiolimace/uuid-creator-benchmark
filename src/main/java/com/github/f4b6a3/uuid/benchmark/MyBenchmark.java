@@ -47,12 +47,12 @@ import com.github.f4b6a3.uuid.UuidCreator;
 import com.github.f4b6a3.uuid.exception.UuidCreatorException;
 import com.github.f4b6a3.uuid.factory.CombGuidCreator;
 import com.github.f4b6a3.uuid.factory.DceSecurityUuidCreator;
-import com.github.f4b6a3.uuid.factory.LexicalOrderGuidCreator;
 import com.github.f4b6a3.uuid.factory.NameBasedMd5UuidCreator;
 import com.github.f4b6a3.uuid.factory.NameBasedSha1UuidCreator;
 import com.github.f4b6a3.uuid.factory.RandomUuidCreator;
 import com.github.f4b6a3.uuid.factory.SequentialUuidCreator;
 import com.github.f4b6a3.uuid.factory.TimeBasedUuidCreator;
+import com.github.f4b6a3.uuid.factory.UlidBasedGuidCreator;
 
 @Threads(1)
 @State(Scope.Thread)
@@ -82,7 +82,7 @@ public class MyBenchmark {
 	private DceSecurityUuidCreator dceSecurityCreator;
 	private DceSecurityUuidCreator dceSecurityWithMacCreator;
 	private CombGuidCreator combCreator;
-	private LexicalOrderGuidCreator lexicalOrderCreator;
+	private UlidBasedGuidCreator ulidBasedCreator;
 
 	@Setup
 	public void setUp() throws IOException {
@@ -106,7 +106,7 @@ public class MyBenchmark {
 		dceSecurityCreator = UuidCreator.getDceSecurityCreator();
 		dceSecurityWithMacCreator = UuidCreator.getDceSecurityCreator().withHardwareAddressNodeIdentifier();
 		combCreator = UuidCreator.getCombCreator();
-		lexicalOrderCreator = UuidCreator.getLexicalOrderCreator();
+		ulidBasedCreator = UuidCreator.getUlidBasedCreator();
 	}
 
 	private static MessageDigest getDigester(String alg) {
@@ -256,9 +256,9 @@ public class MyBenchmark {
 	}
 
 	@Benchmark
-	public UUID UuidCreator_LexicalOrderGuid() {
+	public UUID UuidCreator_UlidBasedGuid() {
 		try {
-			return lexicalOrderCreator.create();
+			return ulidBasedCreator.create();
 		} catch (UuidCreatorException e) {
 			return null;
 		}
