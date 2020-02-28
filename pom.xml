@@ -55,11 +55,6 @@
 			<version>${jmh.version}</version>
 		</dependency>
 		<dependency>
-			<groupId>com.fasterxml.uuid</groupId>
-			<artifactId>java-uuid-generator</artifactId>
-			<version>3.3.0</version>
-		</dependency>
-		<dependency>
 			<groupId>com.eaio.uuid</groupId>
 			<artifactId>uuid</artifactId>
 			<version>3.2</version>
