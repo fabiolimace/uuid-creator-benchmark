@@ -40,7 +40,7 @@ public class AverageTime {
 	// Java UUID
 
 	@Benchmark
-	public UUID Java_Random() {
+	public UUID Java_RandomBased() {
 		return UUID.randomUUID();
 	}
 
@@ -77,11 +77,6 @@ public class AverageTime {
 	}
 
 	@Benchmark
-	public UUID UuidCreator_FastRandomBased() {
-		return UuidCreator.getFastRandomBased();
-	}
-
-	@Benchmark
 	public UUID UuidCreator_NameBasedMd5() {
 		return UuidCreator.getNameBasedMd5(bytes);
 	}
@@ -92,8 +87,13 @@ public class AverageTime {
 	}
 
 	@Benchmark
-	public UUID UuidCreator_CombGuid() {
-		return UuidCreator.getCombGuid();
+	public UUID UuidCreator_PrefixComb() {
+		return UuidCreator.getPrefixComb();
+	}
+
+	@Benchmark
+	public UUID UuidCreator_ShortPrefixComb() {
+		return UuidCreator.getShortPrefixComb();
 	}
 
 	// ULID Creator

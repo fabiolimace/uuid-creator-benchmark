@@ -24,6 +24,10 @@ import com.github.f4b6a3.tsid.TsidCreator;
 import com.github.f4b6a3.tsid.exception.TsidCreatorException;
 import com.github.f4b6a3.ulid.UlidCreator;
 import com.github.f4b6a3.ulid.exception.UlidCreatorException;
+//import com.github.f4b6a3.tsid.TsidCreator;
+//import com.github.f4b6a3.tsid.exception.TsidCreatorException;
+//import com.github.f4b6a3.ulid.UlidCreator;
+//import com.github.f4b6a3.ulid.exception.UlidCreatorException;
 import com.github.f4b6a3.uuid.UuidCreator;
 import com.github.f4b6a3.uuid.exception.UuidCreatorException;
 
@@ -41,7 +45,7 @@ public class SingleShotTime {
 	// Java UUID
 
 	@Benchmark
-	public UUID Java_Random() {
+	public UUID Java_RandomBased() {
 		return UUID.randomUUID();
 	}
 
@@ -78,11 +82,6 @@ public class SingleShotTime {
 	}
 
 	@Benchmark
-	public UUID UuidCreator_FastRandomBased() {
-		return UuidCreator.getFastRandomBased();
-	}
-
-	@Benchmark
 	public UUID UuidCreator_NameBasedMd5() {
 		return UuidCreator.getNameBasedMd5(bytes);
 	}
@@ -93,8 +92,13 @@ public class SingleShotTime {
 	}
 
 	@Benchmark
-	public UUID UuidCreator_CombGuid() {
-		return UuidCreator.getCombGuid();
+	public UUID UuidCreator_PrefixComb() {
+		return UuidCreator.getPrefixComb();
+	}
+
+	@Benchmark
+	public UUID UuidCreator_ShortPrefixComb() {
+		return UuidCreator.getShortPrefixComb();
 	}
 
 	// ULID Creator
