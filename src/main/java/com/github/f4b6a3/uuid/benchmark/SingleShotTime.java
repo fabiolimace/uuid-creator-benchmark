@@ -49,13 +49,6 @@ public class SingleShotTime {
 		return UUID.randomUUID();
 	}
 
-	// EAIO
-
-	@Benchmark
-	public com.eaio.uuid.UUID Eaio_TimeBased() {
-		return new com.eaio.uuid.UUID();
-	}
-
 	// UUID Creator
 
 	@Benchmark
@@ -126,7 +119,7 @@ public class SingleShotTime {
 	@Benchmark
 	public long TsidCreator_Tsid() {
 		try {
-			return TsidCreator.getTsid();
+			return TsidCreator.getTsid1024();
 		} catch (TsidCreatorException e) {
 			return 0;
 		}
@@ -135,7 +128,7 @@ public class SingleShotTime {
 	@Benchmark
 	public String TsidCreator_TsidString() {
 		try {
-			return TsidCreator.getTsidString();
+			return TsidCreator.getTsidString1024();
 		} catch (TsidCreatorException e) {
 			return null;
 		}
