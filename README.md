@@ -20,6 +20,8 @@ Throughput.UlidCreator_Ulid             thrpt    5  19187,272 ±  73,752  ops/ms
 Throughput.UlidCreator_UlidString       thrpt    5   5092,343 ±  31,329  ops/ms
 Throughput.TsidCreator_Tsid             thrpt    5  32003,000 ± 142,804  ops/ms
 Throughput.TsidCreator_TsidString       thrpt    5  11790,429 ± 101,426  ops/ms
+Throughput.TsidCreator_Tsid1024         thrpt    5   4096,236 ±   0,352  ops/ms
+Throughput.TsidCreator_TsidString1024   thrpt    5   4088,976 ±   0,729  ops/ms
 -----------------------------------------------------------------------------------
 Total time: 00:17:24
 -----------------------------------------------------------------------------------
@@ -39,10 +41,10 @@ AverageTime.UuidCreator_NameBasedMd5     avgt    5  244,583 ± 0,681  ns/op
 AverageTime.UuidCreator_NameBasedSha1    avgt    5  332,775 ± 1,030  ns/op
 AverageTime.UuidCreator_TimeBased        avgt    5   55,593 ± 0,294  ns/op
 AverageTime.UuidCreator_TimeOrdered      avgt    5   55,185 ± 0,292  ns/op
-AverageTime.TsidCreator_Tsid             avgt    5   30,305 ± 0,167  ns/op
-AverageTime.TsidCreator_TsidString       avgt    5   85,020 ± 0,526  ns/op
 AverageTime.UlidCreator_Ulid             avgt    5   52,122 ± 0,110  ns/op
 AverageTime.UlidCreator_UlidString       avgt    5  196,876 ± 0,730  ns/op
+AverageTime.TsidCreator_Tsid1024         avgt    5  244,127 ± 0,026  ns/op
+AverageTime.TsidCreator_TsidString1024   avgt    5  244,594 ± 0,422  ns/op
 -----------------------------------------------------------------------------------
 Total time: 00:17:24
 -----------------------------------------------------------------------------------

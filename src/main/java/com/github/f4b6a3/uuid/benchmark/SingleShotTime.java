@@ -1,4 +1,3 @@
-
 package com.github.f4b6a3.uuid.benchmark;
 
 import java.nio.charset.StandardCharsets;
@@ -21,13 +20,7 @@ import org.openjdk.jmh.runner.options.Options;
 import org.openjdk.jmh.runner.options.OptionsBuilder;
 
 import com.github.f4b6a3.tsid.TsidCreator;
-import com.github.f4b6a3.tsid.exception.TsidCreatorException;
 import com.github.f4b6a3.ulid.UlidCreator;
-import com.github.f4b6a3.ulid.exception.UlidCreatorException;
-//import com.github.f4b6a3.tsid.TsidCreator;
-//import com.github.f4b6a3.tsid.exception.TsidCreatorException;
-//import com.github.f4b6a3.ulid.UlidCreator;
-//import com.github.f4b6a3.ulid.exception.UlidCreatorException;
 import com.github.f4b6a3.uuid.UuidCreator;
 import com.github.f4b6a3.uuid.exception.UuidCreatorException;
 
@@ -98,40 +91,44 @@ public class SingleShotTime {
 
 	@Benchmark
 	public UUID UlidCreator_Ulid() {
-		try {
-			return UlidCreator.getUlid();
-		} catch (UlidCreatorException e) {
-			return null;
-		}
+		return UlidCreator.getUlid();
 	}
 
 	@Benchmark
 	public String UlidCreator_UlidString() {
-		try {
-			return UlidCreator.getUlidString();
-		} catch (UlidCreatorException e) {
-			return null;
-		}
+		return UlidCreator.getUlidString();
 	}
 
 	// TSID Creator
 
 	@Benchmark
-	public long TsidCreator_Tsid() {
-		try {
-			return TsidCreator.getTsid1024();
-		} catch (TsidCreatorException e) {
-			return 0;
-		}
+	public long TsidCreator_Tsid256() {
+		return TsidCreator.getTsid256();
 	}
 
 	@Benchmark
-	public String TsidCreator_TsidString() {
-		try {
-			return TsidCreator.getTsidString1024();
-		} catch (TsidCreatorException e) {
-			return null;
-		}
+	public String TsidCreator_TsidString256() {
+		return TsidCreator.getTsidString256();
+	}
+
+	@Benchmark
+	public long TsidCreator_Tsid1024() {
+		return TsidCreator.getTsid1024();
+	}
+
+	@Benchmark
+	public String TsidCreator_TsidString1024() {
+		return TsidCreator.getTsidString1024();
+	}
+
+	@Benchmark
+	public long TsidCreator_Tsid4096() {
+		return TsidCreator.getTsid4096();
+	}
+
+	@Benchmark
+	public String TsidCreator_TsidString4096() {
+		return TsidCreator.getTsidString4096();
 	}
 
 	public static void main(String[] args) throws RunnerException {
