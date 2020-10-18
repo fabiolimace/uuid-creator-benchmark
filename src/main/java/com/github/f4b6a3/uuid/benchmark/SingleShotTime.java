@@ -1,6 +1,5 @@
 package com.github.f4b6a3.uuid.benchmark;
 
-import java.nio.charset.StandardCharsets;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
@@ -22,7 +21,6 @@ import org.openjdk.jmh.runner.options.OptionsBuilder;
 import com.github.f4b6a3.tsid.TsidCreator;
 import com.github.f4b6a3.ulid.UlidCreator;
 import com.github.f4b6a3.uuid.UuidCreator;
-import com.github.f4b6a3.uuid.exception.UuidCreatorException;
 
 @Threads(1)
 @Fork(1)
@@ -33,7 +31,7 @@ import com.github.f4b6a3.uuid.exception.UuidCreatorException;
 @OutputTimeUnit(TimeUnit.MILLISECONDS)
 public class SingleShotTime {
 
-	private byte[] bytes = "John Smith".getBytes(StandardCharsets.UTF_8);
+	private byte[] bytes = "http://www.github.com".getBytes();
 
 	// Java UUID
 
@@ -46,20 +44,12 @@ public class SingleShotTime {
 
 	@Benchmark
 	public UUID UuidCreator_TimeBased() {
-		try {
-			return UuidCreator.getTimeBased();
-		} catch (UuidCreatorException e) {
-			return null;
-		}
+		return UuidCreator.getTimeBased();
 	}
 
 	@Benchmark
 	public UUID UuidCreator_TimeOrdered() {
-		try {
-			return UuidCreator.getTimeOrdered();
-		} catch (UuidCreatorException e) {
-			return null;
-		}
+		return UuidCreator.getTimeOrdered();
 	}
 
 	@Benchmark
