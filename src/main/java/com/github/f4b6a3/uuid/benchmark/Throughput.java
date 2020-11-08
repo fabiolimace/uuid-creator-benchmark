@@ -33,11 +33,16 @@ public class Throughput {
 
 	private byte[] bytes = "http://www.github.com".getBytes();
 
-	// Java UUID
+	// JDK UUID
 
 	@Benchmark
-	public UUID Java_RandomBased() {
+	public UUID JDK_RandomBased() {
 		return UUID.randomUUID();
+	}
+
+	@Benchmark
+	public UUID JDK_NameBasedMd5() {
+		return UUID.nameUUIDFromBytes(bytes);
 	}
 
 	// UUID Creator

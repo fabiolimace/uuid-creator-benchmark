@@ -8,45 +8,25 @@ THROUGHPUT (operations/millis)
 -----------------------------------------------------------------------------------
 Benchmark                                Mode  Cnt      Score     Error   Units
 -----------------------------------------------------------------------------------
-Throughput.Java_RandomBased             thrpt    5   2203,710 ±   7,539  ops/ms
-Throughput.UuidCreator_RandomBased      thrpt    5   2204,038 ±   4,716  ops/ms
-Throughput.UuidCreator_PrefixComb       thrpt    5   2750,621 ±  14,206  ops/ms
-Throughput.UuidCreator_ShortPrefixComb  thrpt    5   2149,540 ±   2,840  ops/ms
-Throughput.UuidCreator_NameBasedMd5     thrpt    5   3888,460 ±  18,874  ops/ms
-Throughput.UuidCreator_NameBasedSha1    thrpt    5   2950,550 ±   4,524  ops/ms
-Throughput.UuidCreator_TimeBased        thrpt    5  18111,045 ±  92,912  ops/ms
-Throughput.UuidCreator_TimeOrdered      thrpt    5  18272,405 ±  66,720  ops/ms
-Throughput.UlidCreator_Ulid             thrpt    5  19187,272 ±  73,752  ops/ms
-Throughput.UlidCreator_UlidString       thrpt    5   5092,343 ±  31,329  ops/ms
-Throughput.TsidCreator_Tsid             thrpt    5  32003,000 ± 142,804  ops/ms
-Throughput.TsidCreator_TsidString       thrpt    5  11790,429 ± 101,426  ops/ms
-Throughput.TsidCreator_Tsid1024         thrpt    5   4096,236 ±   0,352  ops/ms
-Throughput.TsidCreator_TsidString1024   thrpt    5   4088,976 ±   0,729  ops/ms
+Throughput.JDK_RandomBased              thrpt    5   2177,034 ±  12,483  ops/ms
+Throughput.JDK_NameBasedMd5             thrpt    5   3238,463 ±  54,932  ops/ms
+Throughput.UuidCreator_RandomBased      thrpt    5   2172,602 ±  12,425  ops/ms
+Throughput.UuidCreator_NameBasedMd5     thrpt    5   3197,579 ±  18,163  ops/ms
+Throughput.UuidCreator_NameBasedSha1    thrpt    5   2475,547 ±  31,032  ops/ms
+Throughput.UuidCreator_PrefixComb       thrpt    5   2876,617 ±  25,612  ops/ms
+Throughput.UuidCreator_ShortPrefixComb  thrpt    5   2227,698 ±  12,688  ops/ms
+Throughput.UuidCreator_TimeBased        thrpt    5   9971,924 ±   9,817  ops/ms
+Throughput.UuidCreator_TimeOrdered      thrpt    5   9972,807 ±   3,678  ops/ms
+Throughput.UlidCreator_Ulid             thrpt    5  19236,123 ± 156,123  ops/ms
+Throughput.UlidCreator_UlidString       thrpt    5  12893,016 ± 179,618  ops/ms
+Throughput.TsidCreator_Tsid256          thrpt    5  16375,673 ±  38,712  ops/ms
+Throughput.TsidCreator_Tsid1024         thrpt    5   4096,214 ±   0,189  ops/ms
+Throughput.TsidCreator_Tsid4096         thrpt    5   1024,060 ±   0,107  ops/ms
+Throughput.TsidCreator_TsidString256    thrpt    5  14806,519 ±  68,378  ops/ms
+Throughput.TsidCreator_TsidString1024   thrpt    5   4092,947 ±   0,909  ops/ms
+Throughput.TsidCreator_TsidString4096   thrpt    5   1024,026 ±   0,135  ops/ms
 -----------------------------------------------------------------------------------
-Total time: 00:17:24
------------------------------------------------------------------------------------
-```
-
-```text
------------------------------------------------------------------------------------
-AVERAGE TIME (nanos/operation)
------------------------------------------------------------------------------------
-Benchmark                                Mode  Cnt    Score   Error  Units
------------------------------------------------------------------------------------
-AverageTime.Java_RandomBased             avgt    5  452,032 ± 2,062  ns/op
-AverageTime.UuidCreator_RandomBased      avgt    5  448,903 ± 1,541  ns/op
-AverageTime.UuidCreator_PrefixComb       avgt    5  360,176 ± 1,578  ns/op
-AverageTime.UuidCreator_ShortPrefixComb  avgt    5  465,791 ± 1,319  ns/op
-AverageTime.UuidCreator_NameBasedMd5     avgt    5  244,583 ± 0,681  ns/op
-AverageTime.UuidCreator_NameBasedSha1    avgt    5  332,775 ± 1,030  ns/op
-AverageTime.UuidCreator_TimeBased        avgt    5   55,593 ± 0,294  ns/op
-AverageTime.UuidCreator_TimeOrdered      avgt    5   55,185 ± 0,292  ns/op
-AverageTime.UlidCreator_Ulid             avgt    5   52,122 ± 0,110  ns/op
-AverageTime.UlidCreator_UlidString       avgt    5  196,876 ± 0,730  ns/op
-AverageTime.TsidCreator_Tsid1024         avgt    5  244,127 ± 0,026  ns/op
-AverageTime.TsidCreator_TsidString1024   avgt    5  244,594 ± 0,422  ns/op
------------------------------------------------------------------------------------
-Total time: 00:17:24
+Total time: 00:22:40
 -----------------------------------------------------------------------------------
 ```
 
