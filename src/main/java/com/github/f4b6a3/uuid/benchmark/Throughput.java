@@ -31,99 +31,121 @@ import com.github.f4b6a3.uuid.UuidCreator;
 @OutputTimeUnit(TimeUnit.MILLISECONDS)
 public class Throughput {
 
+	UUID uuid = UUID.randomUUID();
+	String string = uuid.toString();
 	private byte[] bytes = "http://www.github.com".getBytes();
 
-	// JDK UUID
+	/*********** JDK UUID ***********/
 
 	@Benchmark
-	public UUID JDK_RandomBased() {
+	public String JDK01_toString() {
+		return uuid.toString();
+	}
+
+	@Benchmark
+	public UUID JDK02_fromString() {
+		return UUID.fromString(string);
+	}
+
+	@Benchmark
+	public UUID JDK03_RandomBased() {
 		return UUID.randomUUID();
 	}
 
 	@Benchmark
-	public UUID JDK_NameBasedMd5() {
+	public UUID JDK04_NameBasedMd5() {
 		return UUID.nameUUIDFromBytes(bytes);
 	}
 
-	// UUID Creator
+	/*********** UUID Creator ***********/
 
 	@Benchmark
-	public UUID UuidCreator_TimeBased() {
-		return UuidCreator.getTimeBased();
+	public String UuidCreator01_toString() {
+		return UuidCreator.toString(uuid);
 	}
 
 	@Benchmark
-	public UUID UuidCreator_TimeOrdered() {
-		return UuidCreator.getTimeOrdered();
+	public UUID UuidCreator02_fromString() {
+		return UuidCreator.fromString(string);
 	}
 
 	@Benchmark
-	public UUID UuidCreator_RandomBased() {
+	public UUID UuidCreator03_RandomBased() {
 		return UuidCreator.getRandomBased();
 	}
 
 	@Benchmark
-	public UUID UuidCreator_NameBasedMd5() {
-		return UuidCreator.getNameBasedMd5(bytes);
-	}
-
-	@Benchmark
-	public UUID UuidCreator_NameBasedSha1() {
-		return UuidCreator.getNameBasedSha1(bytes);
-	}
-
-	@Benchmark
-	public UUID UuidCreator_PrefixComb() {
+	public UUID UuidCreator04_PrefixComb() {
 		return UuidCreator.getPrefixComb();
 	}
 
 	@Benchmark
-	public UUID UuidCreator_ShortPrefixComb() {
+	public UUID UuidCreator05_ShortPrefixComb() {
 		return UuidCreator.getShortPrefixComb();
 	}
 
-	// ULID Creator
-
 	@Benchmark
-	public UUID UlidCreator_Ulid() {
-		return UlidCreator.getUlid();
+	public UUID UuidCreator06_NameBasedMd5() {
+		return UuidCreator.getNameBasedMd5(bytes);
 	}
 
 	@Benchmark
-	public String UlidCreator_UlidString() {
-		return UlidCreator.getUlidString();
+	public UUID UuidCreator07_NameBasedSha1() {
+		return UuidCreator.getNameBasedSha1(bytes);
 	}
 
-	// TSID Creator
+	@Benchmark
+	public UUID UuidCreator08_TimeBased() {
+		return UuidCreator.getTimeBased();
+	}
 
 	@Benchmark
-	public long TsidCreator_Tsid256() {
+	public UUID UuidCreator09_TimeOrdered() {
+		return UuidCreator.getTimeOrdered();
+	}
+
+	/*********** TSID Creator ***********/
+
+	@Benchmark
+	public long TsidCreator01_Tsid256() {
 		return TsidCreator.getTsid256();
 	}
 
 	@Benchmark
-	public String TsidCreator_TsidString256() {
-		return TsidCreator.getTsidString256();
-	}
-
-	@Benchmark
-	public long TsidCreator_Tsid1024() {
+	public long TsidCreator02_Tsid1024() {
 		return TsidCreator.getTsid1024();
 	}
 
 	@Benchmark
-	public String TsidCreator_TsidString1024() {
-		return TsidCreator.getTsidString1024();
-	}
-
-	@Benchmark
-	public long TsidCreator_Tsid4096() {
+	public long TsidCreator03_Tsid4096() {
 		return TsidCreator.getTsid4096();
 	}
 
 	@Benchmark
-	public String TsidCreator_TsidString4096() {
+	public String TsidCreator04_TsidString256() {
+		return TsidCreator.getTsidString256();
+	}
+
+	@Benchmark
+	public String TsidCreator05_TsidString1024() {
+		return TsidCreator.getTsidString1024();
+	}
+
+	@Benchmark
+	public String TsidCreator06_TsidString4096() {
 		return TsidCreator.getTsidString4096();
+	}
+
+	/*********** ULID Creator ***********/
+
+	@Benchmark
+	public UUID UlidCreator01_Ulid() {
+		return UlidCreator.getUlid();
+	}
+
+	@Benchmark
+	public String UlidCreator02_UlidString() {
+		return UlidCreator.getUlidString();
 	}
 
 	public static void main(String[] args) throws RunnerException {
