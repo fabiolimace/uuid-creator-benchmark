@@ -4,22 +4,24 @@ This file shows benchmarks using JMH v1.25.2.
 
 ```text
 ==================================================================================
-THROUGHPUT (operations/millis)             Mode  Cnt      Score     Error   Units
+THROUGHPUT (operations/msec)               Mode  Cnt      Score     Error   Units
 ==================================================================================
 Throughput.JDK01_toString                 thrpt    5   2915,524 ±  86,400  ops/ms
 Throughput.JDK02_fromString               thrpt    5   1938,784 ±  88,818  ops/ms
 Throughput.JDK03_RandomBased              thrpt    5   2050,995 ±  21,636  ops/ms
 Throughput.JDK04_NameBasedMd5             thrpt    5   2809,598 ±  73,894  ops/ms
 ----------------------------------------------------------------------------------
-Throughput.TsidCreator01_Tsid256          thrpt    5  16383,417 ±   5,386  ops/ms
-Throughput.TsidCreator02_Tsid1024         thrpt    5   4096,246 ±   0,063  ops/ms
-Throughput.TsidCreator03_Tsid4096         thrpt    5   1024,052 ±   0,102  ops/ms
-Throughput.TsidCreator04_TsidString256    thrpt    5  14574,401 ± 202,471  ops/ms
-Throughput.TsidCreator05_TsidString1024   thrpt    5   4076,432 ±   3,552  ops/ms
-Throughput.TsidCreator06_TsidString4096   thrpt    5   1023,696 ±   0,445  ops/ms
+Throughput.TsidCreator01_Tsid256          thrpt    5  16075,867 ± 274,681  ops/ms
+Throughput.TsidCreator02_Tsid1024         thrpt    5   4093,735 ±   0,272  ops/ms
+Throughput.TsidCreator03_Tsid4096         thrpt    5   1024,009 ±   0,252  ops/ms
+Throughput.TsidCreator04_Tsid256String    thrpt    5  15379,666 ± 167,178  ops/ms
+Throughput.TsidCreator05_Tsid1024String   thrpt    5   4076,510 ±   2,437  ops/ms
+Throughput.TsidCreator06_Tsid4096String   thrpt    5   1023,653 ±   0,379  ops/ms
 ----------------------------------------------------------------------------------
-Throughput.UlidCreator01_Ulid             thrpt    5  18524,721 ± 563,781  ops/ms
-Throughput.UlidCreator02_UlidString       thrpt    5  12223,501 ±  89,836  ops/ms
+Throughput.UlidCreator01_toString         thrpt    5  29487,382 ± 627,808  ops/ms
+Throughput.UlidCreator02_fromString       thrpt    5  21194,263 ± 706,398  ops/ms
+Throughput.UlidCreator03_Ulid             thrpt    5   2745,123 ±  41,326  ops/ms
+Throughput.UlidCreator04_MonotonicUlid    thrpt    5  19542,344 ± 423,271  ops/ms
 ----------------------------------------------------------------------------------
 Throughput.UuidCreator01_toString         thrpt    5  20940,350 ± 244,373  ops/ms
 Throughput.UuidCreator02_fromString       thrpt    5  10229,685 ± 286,160  ops/ms
@@ -31,7 +33,7 @@ Throughput.UuidCreator07_NameBasedSha1    thrpt    5   2155,267 ±  48,075  ops/
 Throughput.UuidCreator08_TimeBased        thrpt    5   9892,718 ±  38,906  ops/ms
 Throughput.UuidCreator09_TimeOrdered      thrpt    5   9898,455 ±  24,376  ops/ms
 ==================================================================================
-Total time: 00:28:06
+Total time: 00:30:40
 ==================================================================================
 ```
 
